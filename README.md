@@ -1,28 +1,35 @@
-get_win8key
+win10-autoactivate
+
 ===========
 
-script to read a preinstalled Windows 8.x OEM license key from a PC's firmware
-
+Script to read + install Windows 8+ OEM license key from a PC's firmware.
 
 Description
 -------------
-PCs with a preinstalled Windows 8.x OEM version don't seem to ship with any printed license record, CD Key, etc.
-Instead it looks like that the PC's individual license has been saved in the device's firmware (ACPI). When the user tries to reinstall Windows, the Windows Setup reads the license key from the firmware memory, so there's no need to manually type in the actual Windows key.
 
-To still be able to backup / inventorize the license key, this script tries to read the Windows 8.x key from the PC firmware.
-(from ACPI -> MSDM table -> byte offset 56 to end)
+PCs shipped with Windows 10 don't have any OEM key sticker, nor can they be activated by an OEM certificate and single OEM key anymore.
+When imaging these PCs, Windows should automatically read the key from the BIOS and auto-activate, but in most cases it doesn't, especially when using an image rather than a basic install.
 
+Read key from firmware(from ACPI -> MSDM table -> byte offset 56 to end) then install using slmgr.vbs.
 
 Usage
 -------------
-run "get_win8key.exe" or "python get_win8key.py" from a Windows shell.
+
+Generate activate.exe from activate.py using PyInstaller.
+
+`pyinstaller.py --onefile activate.py`
+
+Place activate.exe inside your image, usually in C:\Drivers
+
+Using Windows System Image Manager, create your unattend file.
+* In amd64_Microsoft_Windows-Shell-Setup_neutral
+** FirstLogonCommands
+*** SynchronousCommand (CommandLine: C:\Drivers\activate.exe)
+
+sysprep your image, then on your first login to the imaged machine (as long as it's by an Administrator), your system will activate.
 
 Requirements
 -------------
--Windows Vista or higher (32 or 64 bit)  
--tested with Python 2.7 and 3.4
 
-Files
--------------
-get_win8key.py..................the script  
-get_win8key.exe.................compiled py2exe  
+-Windows 8 or higher (32 or 64 bit)  
+-tested with Python 2.7

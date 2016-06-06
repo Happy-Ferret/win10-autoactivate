@@ -1,6 +1,7 @@
 import sys
 import ctypes
 import ctypes.wintypes
+from subprocess import call
 
 #####################################################
 #script to query windows 8.x OEM key from PC firmware
@@ -69,7 +70,8 @@ try:
 		print("unexpected error")
 		sys.exit(1)
 	else:
-		print(str(WindowsKey))
+		#print(str(WindowsKey))
+		call(["cscript", "C:\windows\system32\slmgr.vbs", "/ipk", WindowsKey])
 except:
 	print("unexpected error")
 	sys.exit(1)
