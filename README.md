@@ -1,5 +1,4 @@
 win10-autoactivate
-
 ===========
 
 Script to read + install Windows 8+ OEM license key from a PC's firmware.
