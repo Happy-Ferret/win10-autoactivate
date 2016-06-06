@@ -22,8 +22,8 @@ Place activate.exe inside your image, usually in C:\Drivers
 
 Using Windows System Image Manager, create your unattend file.
 * In amd64_Microsoft_Windows-Shell-Setup_neutral
-** FirstLogonCommands
-*** SynchronousCommand (CommandLine: C:\Drivers\activate.exe)
+  * FirstLogonCommands
+    * SynchronousCommand (CommandLine: C:\Drivers\activate.exe)
 
 sysprep your image, then on your first login to the imaged machine (as long as it's by an Administrator), your system will activate.
 
